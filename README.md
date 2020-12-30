@@ -16,6 +16,13 @@ Some images to demonstrates -
 * r (fixing local_epochs and precision to 3 and 7 respectively)
 * precision (fixing local_epochs and r to 3 and 100% respectively)
 
+#### local epochs:
+![local-epochs](https://github.com/AmanPriyanshu/FedPAQ-MNIST-implemenation/blob/main/local_epochs_variations.png)
+#### r:
+![r](https://github.com/AmanPriyanshu/FedPAQ-MNIST-implemenation/blob/main/r_variations.png)
+#### precision:
+![precision](https://github.com/AmanPriyanshu/FedPAQ-MNIST-implemenation/blob/main/precision_variations.png)
+
 ## Analysis-Synopsis:
 
 local_epochs | r | precision | train_loss | train_acc | test_loss | test_acc
