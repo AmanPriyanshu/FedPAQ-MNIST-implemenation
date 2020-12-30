@@ -7,6 +7,7 @@ import os
 import time
 import matplotlib.pyplot as plt
 from PIL import Image
+import cv2
 
 class Test:
 	def __init__(self, train_x, train_y, test_x, test_y):
@@ -101,6 +102,12 @@ class Test:
 			name = names[0][len('./results/'):names[0].index('__')]
 			new_im.save(name+'_variations.png')
 
+		### Resizing for actual use
+
+		for image in [i for i in os.listdir() if '_variations.png' in i]:
+			img = cv2.resize(cv2.imread(image), (1280, 240))
+			cv2.imwrite(image, img)
+
 	def image(self, performances, names, pic_name):
 		for i,name in enumerate(['train_loss', 'train_acc', 'test_loss', 'test_acc']):
 			plt.cla()
@@ -160,7 +167,6 @@ class Test:
 
 if __name__ == '__main__':
 	train_x, train_y, test_x, test_y = Dataset().load_csv()
-	
 	test = Test(train_x, train_y, test_x, test_y)
 	test.analyse_all()
 	test.image_generator()
