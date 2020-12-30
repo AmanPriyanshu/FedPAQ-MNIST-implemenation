@@ -79,9 +79,16 @@ class Test:
 		all_best_performances.columns = ['local_epochs', 'r', 'precision', 'train_loss', 'train_acc', 'test_loss', 'test_acc']
 		all_best_performances.to_csv('./results/best_performances.csv', index=False)
 
+	def image_generator(self):
+		performance = pd.read_csv('./results/best_performances.csv')
+		features = performance.columns
+		performance = performance.values
+		best_index = np.argmin(performance.T[-2])
+		print("Best Performance By: ", {i:j for i,j in zip(features, performance[best_index])})
 
 if __name__ == '__main__':
-	train_x, train_y, test_x, test_y = Dataset().load_csv()
-	
+	#train_x, train_y, test_x, test_y = Dataset().load_csv()
+	train_x, train_y, test_x, test_y = None, None, None, None
 	test = Test(train_x, train_y, test_x, test_y)
-	test.analyse_all()
+	#test.analyse_all()
+	test.image_generator()

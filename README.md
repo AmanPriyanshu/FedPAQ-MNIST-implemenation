@@ -1,6 +1,21 @@
 # FedPAQ-MNIST-implemenation
 An implementation of FedPAQ using different experimental parameters. We will be looking at different variations of how, r(number of clients to be selected), t (local epochs) and s (Quantizer levels))
 
+## Best-Perfomance:
+
+Best Performance was given by:
+
+local_epochs | r | precision | train_loss | train_acc | test_loss | test_acc
+---|---|---|---|---|---|---
+3.0 | 1.0 | 7.0 | 1.5085993612684854 | 0.9544112042682927 | 1.514190214489578 | 0.9487528669724771
+
+## Analysis-of-Variations:
+
+Some images to demonstrates - 
+* local epochs (fixing precision and r to 7 and 100% respectively)
+* r (fixing local_epochs and precision to 3 and 7 respectively)
+* precision (fixing local_epochs and r to 3 and 100% respectively)
+
 ## Analysis-Synopsis:
 
 local_epochs | r | precision | train_loss | train_acc | test_loss | test_acc
@@ -41,11 +56,6 @@ local_epochs | r | precision | train_loss | train_acc | test_loss | test_acc
 5.0 | 1.0 | 5.0 | 1.521039308207791 | 0.9413109756097561 | 1.5255555472242723 | 0.9377866972477065
 5.0 | 1.0 | 6.0 | 1.5142119323335044 | 0.9487661966463414 | 1.519685910382402 | 0.9436998279816514
 5.0 | 1.0 | 7.0 | 2.3012793035041996 | 0.11149485518292683 | 2.301147645766582 | 0.11374713302752294
-
-Some images to demonstrates - 
-* local epochs (fixing precision and r to _ and _ respectively)
-* r (fixing local_epochs and precision to _ and _ respectively)
-* precision (fixing local_epochs and r to _ and _ respectively)
 
 ### Reference:
 ```console
