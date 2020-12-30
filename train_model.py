@@ -6,10 +6,14 @@ from load_dataset import Dataset
 import os
 
 class MNIST_PAQ:
-	def __init__(self):
+	def __init__(self, number_of_clients=1, aggregate_epochs=10, local_epochs=5, precision=7):
 		self.model = None
 		self.criterion = torch.nn.CrossEntropyLoss()
 		self.optimizer = None
+		self.number_of_clients = number_of_clients
+		self.aggregate_epochs = aggregate_epochs
+		self.local_epochs = local_epochs
+		self.precision = precision
 
 	def define_model(self):
 		self.model = torch.nn.Sequential(
@@ -28,8 +32,8 @@ class MNIST_PAQ:
 			torch.nn.Sigmoid(),
 		)		
 
-	def get_weights(self, dtype=np.float32, precision=7):
-		assert precision<8, "Floats generally have 6-7 significant digits. Please try a lower number than or equal to 7"
+	def get_weights(self, dtype=np.float32):
+		precision = self.precision
 		weights = []
 		for layer in self.model:
 			try:
@@ -55,7 +59,8 @@ class MNIST_PAQ:
 		all_weights = [[torch.from_numpy(i[0].astype(np.float32)), torch.from_numpy(i[1].astype(np.float32))] for i in all_weights]
 		return all_weights
 
-	def client_generator(self, train_x, train_y, number_of_clients=100):
+	def client_generator(self, train_x, train_y):
+		number_of_clients = self.number_of_clients
 		size = train_y.shape[0]//number_of_clients
 		train_x, train_y = train_x.numpy(), train_y.numpy()
 		train_x = np.array([train_x[i:i+size] for i in range(0, len(train_x)-len(train_x)%size, size)])
@@ -93,7 +98,9 @@ class MNIST_PAQ:
 		return (acc/test_x.shape[0])
 			
 
-	def train_aggregator(self, datasets, datasets_test, aggregate_epochs=10, local_epochs=5):
+	def train_aggregator(self, datasets, datasets_test):
+		local_epochs = self.local_epochs
+		aggregate_epochs = self.aggregate_epochs
 		os.system('mkdir saved_models')
 		E = local_epochs
 		aggregate_weights = None
@@ -123,6 +130,6 @@ if __name__ == '__main__':
 
 	train_x, train_y, test_x, test_y = Dataset().load_csv()
 
-	m = MNIST_PAQ()
-	train_x, train_y = m.client_generator(train_x, train_y, number_of_clients=number_of_clients)
-	m.train_aggregator({'x':train_x, 'y':train_y}, {'x':test_x, 'y':test_y}, aggregate_epochs=aggregate_epochs, local_epochs=local_epochs)
+	m = MNIST_PAQ(number_of_clients=number_of_clients, aggregate_epochs=aggregate_epochs, local_epochs=local_epochs)
+	train_x, train_y = m.client_generator(train_x, train_y)
+	m.train_aggregator({'x':train_x, 'y':train_y}, {'x':test_x, 'y':test_y})
