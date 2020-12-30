@@ -23,11 +23,11 @@ Some images to demonstrates -
 * precision (fixing local_epochs and r to 3 and 100% respectively)
 
 #### local epochs:
-![local-epochs](https://github.com/AmanPriyanshu/FedPAQ-MNIST-implemenation/blob/main/local_epochs_variations.png)
+![local-epochs](https://github.com/AmanPriyanshu/FedPAQ-MNIST-implemenation/blob/main/raw_images/local_epochs_variations.png)
 #### r:
-![r](https://github.com/AmanPriyanshu/FedPAQ-MNIST-implemenation/blob/main/r_variations.png)
+![r](https://github.com/AmanPriyanshu/FedPAQ-MNIST-implemenation/blob/main/raw_images/r_variations.png)
 #### precision:
-![precision](https://github.com/AmanPriyanshu/FedPAQ-MNIST-implemenation/blob/main/precision_variations.png)
+![precision](https://github.com/AmanPriyanshu/FedPAQ-MNIST-implemenation/blob/main/raw_images/precision_variations.png)
 
 ## Analysis-Synopsis:
 
