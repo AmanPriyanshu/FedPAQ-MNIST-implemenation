@@ -83,7 +83,6 @@ class MNIST_PAQ:
 		return weights, running_loss
 
 	def test_aggregated_model(self, test_x, test_y, epoch):
-		os.system('mkdir saved_models')
 		acc = 0
 		with torch.no_grad():
 			for batch_x, batch_y in zip(test_x, test_y):
@@ -95,6 +94,7 @@ class MNIST_PAQ:
 			
 
 	def train_aggregator(self, datasets, datasets_test, aggregate_epochs=10, local_epochs=5):
+		os.system('mkdir saved_models')
 		E = local_epochs
 		aggregate_weights = None
 		for epoch in range(aggregate_epochs):
@@ -117,7 +117,7 @@ class MNIST_PAQ:
 			clients.close()
 
 if __name__ == '__main__':
-	number_of_clients = 150
+	number_of_clients = 50
 	aggregate_epochs = 100
 	local_epochs = 3
 

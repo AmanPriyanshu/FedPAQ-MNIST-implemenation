@@ -14,6 +14,7 @@ class Dataset:
 		batch_size = self.batch_size
 		data = pd.read_csv(path + 'train.csv')
 		data = data.values
+		np.random.shuffle(data)
 		self.train_x = np.array([np.reshape(i, (1, int(np.sqrt(i.shape[0])), int(np.sqrt(i.shape[0])))) for i in data.T[1:].T], dtype=np.float32)
 		self.train_y = data.T[0]
 		data = pd.read_csv(path + 'test.csv')
