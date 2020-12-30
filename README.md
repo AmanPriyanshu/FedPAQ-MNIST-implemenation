@@ -1,6 +1,17 @@
 # FedPAQ-MNIST-implemenation
 An implementation of FedPAQ using different experimental parameters. We will be looking at different variations of how, r(number of clients to be selected), t (local epochs) and s (Quantizer levels))
 
+## Analysis-Synopsis:
+
+```csv
+
+```
+
+Some images to demonstrates - 
+* local epochs (fixing precision and r to _ and _ respectively)
+* r (fixing local_epochs and precision to _ and _ respectively)
+* precision (fixing local_epochs and r to _ and _ respectively)
+
 ### Reference:
 ```console
 @ARTICLE{2019arXiv190913014R,
