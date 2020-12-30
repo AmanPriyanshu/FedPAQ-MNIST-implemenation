@@ -6,7 +6,7 @@ from load_dataset import Dataset
 import os
 
 class MNIST_PAQ:
-	def __init__(self, number_of_clients=1, aggregate_epochs=10, local_epochs=5, precision=7):
+	def __init__(self, filename="saved_models", number_of_clients=1, aggregate_epochs=10, local_epochs=5, precision=7, r=1.0):
 		self.model = None
 		self.criterion = torch.nn.CrossEntropyLoss()
 		self.optimizer = None
@@ -14,6 +14,8 @@ class MNIST_PAQ:
 		self.aggregate_epochs = aggregate_epochs
 		self.local_epochs = local_epochs
 		self.precision = precision
+		self.r = r
+		self.filename = filename
 
 	def define_model(self):
 		self.model = torch.nn.Sequential(
@@ -94,28 +96,31 @@ class MNIST_PAQ:
 				y_pred = self.model(batch_x)
 				y_pred = torch.argmax(y_pred, dim=1)
 				acc += torch.sum(y_pred == batch_y)/y_pred.shape[0]
-		torch.save(self.model, "./saved_models/model_epoch_"+str(epoch)+".pt")
+		torch.save(self.model, "./"+self.filename+"/model_epoch_"+str(epoch+1)+".pt")
 		return (acc/test_x.shape[0])
 			
 
 	def train_aggregator(self, datasets, datasets_test):
 		local_epochs = self.local_epochs
 		aggregate_epochs = self.aggregate_epochs
-		os.system('mkdir saved_models')
+		os.system('mkdir '+self.filename)
 		E = local_epochs
 		aggregate_weights = None
 		for epoch in range(aggregate_epochs):
 			all_weights = []
 			client = 0
 			running_loss = 0
-			clients = tqdm(zip(datasets['x'], datasets['y']), total=datasets['x'].shape[0])
+			selections = np.arange(datasets['x'].shape[0])
+			np.random.shuffle(selections)
+			selections = selections[:int(self.r*datasets['x'].shape[0])]
+			clients = tqdm(zip(datasets['x'][selections], datasets['y'][selections]), total=selections.shape[0])
 			for dataset_x, dataset_y in clients:
 				dataset = {'x':dataset_x, 'y':dataset_y}
 				weights, loss = self.single_client(dataset, aggregate_weights, E)
 				running_loss += loss
 				all_weights.append(weights)
 				client += 1
-				clients.set_description(str({"Epoch":epoch,"Loss": round(running_loss/client, 5)}))
+				clients.set_description(str({"Epoch":epoch+1,"Loss": round(running_loss/client, 5)}))
 				clients.refresh()
 			aggregate_weights = self.average_weights(all_weights)
 			self.set_weights(aggregate_weights)
@@ -127,9 +132,11 @@ if __name__ == '__main__':
 	number_of_clients = 328
 	aggregate_epochs = 10
 	local_epochs = 3
+	r = 0.5
+	filename = "saved_models"
 
 	train_x, train_y, test_x, test_y = Dataset().load_csv()
 
-	m = MNIST_PAQ(number_of_clients=number_of_clients, aggregate_epochs=aggregate_epochs, local_epochs=local_epochs)
+	m = MNIST_PAQ(filename=filename, r=r, number_of_clients=number_of_clients, aggregate_epochs=aggregate_epochs, local_epochs=local_epochs)
 	train_x, train_y = m.client_generator(train_x, train_y)
 	m.train_aggregator({'x':train_x, 'y':train_y}, {'x':test_x, 'y':test_y})
