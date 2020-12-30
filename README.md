@@ -7,7 +7,7 @@ Best Performance was given by:
 
 local_epochs | r | precision | train_loss | train_acc | test_loss | test_acc
 ---|---|---|---|---|---|---
-3.0 | 1.0 | 7.0 | 1.5085993612684854 | 0.9544112042682927 | 1.514190214489578 | 0.9487528669724771
+3.0 | 1.0 | 7.0 | 1.50859 | 0.95441 | 1.51419| 0.94875
 
 ## Analysis-of-Variations:
 
