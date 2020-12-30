@@ -68,7 +68,7 @@ class MNIST_PAQ:
 		self.define_model()
 		if weights is not None:
 			self.set_weights(weights)
-		self.optimizer = torch.optim.SGD(self.model.parameters(), lr=0.01, momentum=0.9)
+		self.optimizer = torch.optim.Adam(self.model.parameters(), lr=0.001)
 		for epoch in range(E):
 			running_loss = 0
 			for batch_x, target in zip(dataset['x'], dataset['y']):
@@ -117,8 +117,8 @@ class MNIST_PAQ:
 			clients.close()
 
 if __name__ == '__main__':
-	number_of_clients = 50
-	aggregate_epochs = 100
+	number_of_clients = 328
+	aggregate_epochs = 10
 	local_epochs = 3
 
 	train_x, train_y, test_x, test_y = Dataset().load_csv()
