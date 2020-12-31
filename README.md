@@ -5,7 +5,7 @@ Here, we clearly understand the importance of `local epochs` being between 1 and
 
 As for the value of `r` I used ratios with respect to the total number of clients in this implementation. This was done for easier and readable implementation. We also see an incline with the increase in `r`, as `r` increases from `0.5` to `1`. FedPAQ's claim that ideal performance will be given by `r = 100%` is supported.
 
-Finally quantization is enables in the form precision here, so as to allow beginners and non-coders to understand. This is still supported by the FedPAQ's claims with regards to Quantizer Levels (`s`). As `precision` increases, so does performance.
+Finally quantization is enabled in the form precision here, so as to allow beginners and non-coders to understand. This is still supported by the FedPAQ's claims with regards to Quantizer Levels (`s`). As `precision` increases, so does performance.
 
 ## Best-Perfomance:
 
