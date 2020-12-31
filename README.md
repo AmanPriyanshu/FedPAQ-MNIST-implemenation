@@ -1,5 +1,5 @@
 # FedPAQ-MNIST-implemenation
-An implementation of FedPAQ using different experimental parameters. We will be looking at different variations of how, r(number of clients to be selected), t (local epochs) and precision (Quantizer levels)).
+An implementation of FedPAQ using different experimental parameters. We will be looking at different variations of how, r(number of clients to be selected), t (local epochs) and precision (Quantizer levels).
 
 Here, we clearly understand the importance of `local epochs` being between 1 and root(T) (here, 10). We can see that best `local epoch` is `3`, which is the closest root(10), at the same time, when comparing 1 and 5, we see 1 having a better performance and hence containing learning potential. Thereby, experimentally supporting the claim that the ideal, local number of epochs should be between `1` and `root(T)` (or root(10) ~ 3).
 
