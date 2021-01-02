@@ -31,7 +31,7 @@ class MNIST_PAQ:
 			torch.nn.Linear(128, 32),
 			torch.nn.ReLU(),
 			torch.nn.Linear(32, 10),
-			torch.nn.Sigmoid(),
+			torch.nn.Softmax(dim=1),
 		)		
 
 	def get_weights(self, dtype=np.float32):
